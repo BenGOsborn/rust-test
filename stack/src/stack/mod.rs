@@ -1,2 +1,2 @@
-pub mod node;
+mod node;
 pub mod stack;
