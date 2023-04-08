@@ -18,7 +18,7 @@ fn main() {
 
     println!("{:?}", stack.pop());
 
-    let sequence = "(3 + 5) * 4";
-    let tokens = tokenize(sequence);
+    let expression = "(3 + 5) * 4";
+    let tokens = tokenize(expression);
     println!("{:?}", tokens);
 }

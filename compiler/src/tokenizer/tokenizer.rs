@@ -1,9 +1,9 @@
 use crate::tokenizer::token::Token;
 
-pub fn tokenize(sequence: &str) -> Vec<Token> {
+pub fn tokenize(expression: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = Vec::new();
 
-    for char in sequence.chars() {
+    for char in expression.chars() {
         match char {
             '(' => tokens.push(Token::BracketOpen),
             ')' => tokens.push(Token::BracketClosed),
