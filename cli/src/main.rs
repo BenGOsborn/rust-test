@@ -1,9 +1,8 @@
-extern crate stack;
+extern crate compiler;
 
-use stack::stack::stack::Stack;
+use compiler::stack::stack::Stack;
 
 fn main() {
-    // let mut head = Node::new(3);
     let mut stack: Stack<i32> = Stack::new();
 
     stack.push(2);

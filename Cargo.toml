@@ -1,2 +1,2 @@
 [workspace]
-members = ["stack", "cli"]
+members = ["compiler", "cli"]
