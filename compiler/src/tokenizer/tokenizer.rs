@@ -7,6 +7,7 @@ pub fn tokenize(sequence: &str) -> Vec<Token> {
         match char {
             '(' => tokens.push(Token::BracketOpen),
             ')' => tokens.push(Token::BracketClosed),
+            '^' => tokens.push(Token::OpPower),
             '+' => tokens.push(Token::OpAdd),
             '-' => tokens.push(Token::OpSubtract),
             '*' => tokens.push(Token::OpMultiply),

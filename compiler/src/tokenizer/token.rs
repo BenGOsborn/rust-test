@@ -2,6 +2,7 @@
 pub enum Token {
     BracketOpen,
     BracketClosed,
+    OpPower,
     OpAdd,
     OpSubtract,
     OpMultiply,
