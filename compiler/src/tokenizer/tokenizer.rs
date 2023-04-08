@@ -1,6 +1,6 @@
 use crate::tokenizer::token::Token;
 
-enum Created {
+enum Status {
     Created(Token),
     Exists(Token),
 }
@@ -22,15 +22,15 @@ pub fn tokenize(expression: &str) -> Vec<Token> {
                     .last()
                     .map(|token| match token {
                         Token::Value(prev) => {
-                            Created::Exists(Token::Value(prev.to_string() + &char.to_string()))
+                            Status::Exists(Token::Value(prev.to_string() + &char.to_string()))
                         }
-                        _ => Created::Created(Token::Value(char.to_string())),
+                        _ => Status::Created(Token::Value(char.to_string())),
                     })
                     .map(|created| match created {
-                        Created::Created(token) => tokens.push(token),
-                        Created::Exists(token) => {
-                            tokens.remove(tokens.len() - 1);
-                            tokens.push(token);
+                        Status::Created(token) => tokens.push(token),
+                        Status::Exists(token) => {
+                            let last_index = tokens.len() - 1;
+                            tokens[last_index] = token;
                         }
                     });
             }

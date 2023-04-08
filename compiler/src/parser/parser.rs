@@ -1,31 +1,45 @@
-use std::ops::Add;
-
 use crate::stack::stack::Stack;
 use crate::tokenizer::token::Token;
 
-pub fn parse(tokens: &Vec<Token>) -> i32 {
+fn generate_rpn(tokens: &Vec<Token>) -> Vec<&Token> {
     let mut stack: Stack<&Token> = Stack::new();
-    let mut sequence: Vec<&str> = Vec::new();
+    let mut rpn: Vec<&Token> = Vec::new();
 
-    // **** Now I also need a way of keeping track of numbers from their character form
+    // **** Let us not deal with error handling for now
 
     for token in tokens {
         match token {
             Token::BracketOpen => stack.push(token),
-            Token::BracketClosed => {}
-            Token::OpPower => {}
-            Token::OpMultiply => {}
-            Token::OpDivide => {}
-            Token::OpAdd => {}
-            Token::OpSubtract => {}
-            Token::Value(c) => {}
+            Token::BracketClosed => {
+                while let Some(item) = stack.pop() {
+                    match item {
+                        Token::BracketOpen => break,
+                        _ => rpn.push(item),
+                    }
+                }
+            }
+            Token::OpPower
+            | Token::OpMultiply
+            | Token::OpDivide
+            | Token::OpAdd
+            | Token::OpSubtract => {
+                // **** We first check if the stack is empty, in which we will push an element to the stack
+                // **** If there is already an element on the stack, we check if our new element is greater where we push another one on
+                // **** Otherwise, we pop the previous ones off until we find an element that is less where we push it on again
+            }
+            Token::Value(_) => rpn.push(token),
         }
     }
 
-    println!("{:?}", sequence);
+    // **** Add the remaining elements from the stack to the sequence
 
-    // **** This will require looping through the tokens, creating a stack structure, validating the stack as we go, and returning the output
-    // **** In addition, enable the option to debug where the value will be printed
+    rpn
+}
+
+pub fn parse(tokens: &Vec<Token>) -> i32 {
+    let rpn = generate_rpn(tokens);
+
+    println!("{:?}", rpn);
 
     -1
 }
