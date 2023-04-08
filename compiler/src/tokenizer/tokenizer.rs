@@ -18,21 +18,24 @@ pub fn tokenize(expression: &str) -> Vec<Token> {
             '*' => tokens.push(Token::OpMultiply),
             '/' => tokens.push(Token::OpDivide),
             '0'..='9' => {
-                tokens
-                    .last()
-                    .map(|token| match token {
+                // Append the character to the list of tokens or concatenate it with a previous character to form a number
+                let created = tokens.last().map_or(
+                    Status::Created(Token::Value(char.to_string())),
+                    |token| match token {
                         Token::Value(prev) => {
                             Status::Exists(Token::Value(prev.to_string() + &char.to_string()))
                         }
                         _ => Status::Created(Token::Value(char.to_string())),
-                    })
-                    .map(|created| match created {
-                        Status::Created(token) => tokens.push(token),
-                        Status::Exists(token) => {
-                            let last_index = tokens.len() - 1;
-                            tokens[last_index] = token;
-                        }
-                    });
+                    },
+                );
+
+                match created {
+                    Status::Created(token) => tokens.push(token),
+                    Status::Exists(token) => {
+                        let last_index = tokens.len() - 1;
+                        tokens[last_index] = token;
+                    }
+                };
             }
             _ => {}
         }
