@@ -1,5 +1,10 @@
 use crate::tokenizer::token::Token;
 
+enum Created {
+    Created(Token),
+    Exists(Token),
+}
+
 pub fn tokenize(expression: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = Vec::new();
 
@@ -12,10 +17,26 @@ pub fn tokenize(expression: &str) -> Vec<Token> {
             '-' => tokens.push(Token::OpSubtract),
             '*' => tokens.push(Token::OpMultiply),
             '/' => tokens.push(Token::OpDivide),
-            '0'..='9' => tokens.push(Token::Value(char as i32 - '0' as i32)),
+            '0'..='9' => {
+                tokens
+                    .last()
+                    .map(|token| match token {
+                        Token::Value(prev) => {
+                            Created::Exists(Token::Value(prev.to_string() + &char.to_string()))
+                        }
+                        _ => Created::Created(Token::Value(char.to_string())),
+                    })
+                    .map(|created| match created {
+                        Created::Created(token) => tokens.push(token),
+                        Created::Exists(token) => {
+                            tokens.remove(tokens.len() - 1);
+                            tokens.push(token);
+                        }
+                    });
+            }
             _ => {}
         }
     }
 
-    return tokens;
+    tokens
 }
