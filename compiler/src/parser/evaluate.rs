@@ -17,11 +17,11 @@ pub fn evaluate(rpn: &Vec<&Token>) -> Token {
                 match (operand1, operand2) {
                     (Token::Value(v1), Token::Value(v2)) => {
                         let val = match token {
-                            Token::OpAdd => v1 + v2,
-                            Token::OpSubtract => v1 - v2,
-                            Token::OpMultiply => v1 * v2,
-                            Token::OpDivide => v1 / v2,
-                            Token::OpPower => v1 ^ v2,
+                            Token::OpAdd => v2 + v1,
+                            Token::OpSubtract => v2 - v1,
+                            Token::OpMultiply => v2 * v1,
+                            Token::OpDivide => v2 / v1,
+                            Token::OpPower => v2 ^ v1,
                             _ => panic!("Fatal error"),
                         };
 
