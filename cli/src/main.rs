@@ -16,6 +16,10 @@ fn main() {
             .read_line(&mut expression)
             .expect("Failed to read line");
 
+        if expression == "exit" {
+            break;
+        }
+
         let value = calculate(&expression);
 
         println!("{:?} = {:?}", expression, value);
