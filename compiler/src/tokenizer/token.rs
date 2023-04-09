@@ -7,7 +7,7 @@ pub enum Token {
     OpSubtract,
     OpMultiply,
     OpDivide,
-    Value(u32),
+    Value(i32),
 }
 
 impl Token {

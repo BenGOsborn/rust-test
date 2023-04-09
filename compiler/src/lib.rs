@@ -1,3 +1,4 @@
-pub mod parser;
+pub mod calculator;
+mod parser;
 mod stack;
-pub mod tokenizer;
+mod tokenizer;
