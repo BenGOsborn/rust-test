@@ -59,3 +59,43 @@ pub fn generate_rpn(tokens: &Vec<Token>) -> Vec<&Token> {
 
     rpn
 }
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn rpn_generate_rpn() {
+        let tokens = vec![
+            Token::BracketOpen,
+            Token::Value(5),
+            Token::OpAdd,
+            Token::Value(3),
+            Token::BracketClosed,
+            Token::OpMultiply,
+            Token::Value(12),
+            Token::OpPower,
+            Token::Value(2),
+            Token::OpSubtract,
+            Token::Value(4),
+            Token::OpDivide,
+            Token::Value(2),
+        ];
+        let expected = vec![
+            &tokens[1],
+            &tokens[3],
+            &tokens[2],
+            &tokens[6],
+            &tokens[8],
+            &tokens[7],
+            &tokens[5],
+            &tokens[10],
+            &tokens[12],
+            &tokens[11],
+            &tokens[9],
+        ];
+
+        let rpn = generate_rpn(&tokens);
+
+        assert_eq!(rpn, expected);
+    }
+}

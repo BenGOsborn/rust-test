@@ -13,3 +13,17 @@ pub fn calculate(expression: &str) -> i32 {
         _ => panic!("Unexpected error"),
     }
 }
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn calculator_calculate() {
+        let expression = "(5 + 3) * 12 ^ 2 - 4 / 2";
+        let expected = 1150;
+
+        let value = calculate(expression);
+
+        assert_eq!(value, expected);
+    }
+}

@@ -40,3 +40,44 @@ pub fn evaluate(rpn: &Vec<&Token>) -> Token {
 
     stack.pop().unwrap()
 }
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parser_evaluate() {
+        let tokens = vec![
+            Token::BracketOpen,
+            Token::Value(5),
+            Token::OpAdd,
+            Token::Value(3),
+            Token::BracketClosed,
+            Token::OpMultiply,
+            Token::Value(12),
+            Token::OpPower,
+            Token::Value(2),
+            Token::OpSubtract,
+            Token::Value(4),
+            Token::OpDivide,
+            Token::Value(2),
+        ];
+        let rpn = vec![
+            &tokens[1],
+            &tokens[3],
+            &tokens[2],
+            &tokens[6],
+            &tokens[8],
+            &tokens[7],
+            &tokens[5],
+            &tokens[10],
+            &tokens[12],
+            &tokens[11],
+            &tokens[9],
+        ];
+        let expected = Token::Value(1150);
+
+        let value = evaluate(&rpn);
+
+        assert_eq!(value, expected);
+    }
+}
