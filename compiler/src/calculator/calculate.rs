@@ -14,6 +14,7 @@ pub fn calculate(expression: &str) -> i32 {
     }
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 

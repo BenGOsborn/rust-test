@@ -41,6 +41,7 @@ pub fn evaluate(rpn: &Vec<&Token>) -> Token {
     stack.pop().unwrap()
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 

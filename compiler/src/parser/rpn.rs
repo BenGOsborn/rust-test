@@ -60,6 +60,7 @@ pub fn generate_rpn(tokens: &Vec<Token>) -> Vec<&Token> {
     rpn
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
