@@ -36,3 +36,38 @@ impl<T> Stack<T> {
         })
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn stack_size() {
+        let mut stack: Stack<i32> = Stack::new();
+
+        assert_eq!(stack.length, 0);
+
+        stack.push(1);
+        assert_eq!(stack.length, 1);
+
+        stack.pop();
+        assert_eq!(stack.length, 0);
+    }
+
+    #[test]
+    fn stack_elements() {
+        let mut stack: Stack<i32> = Stack::new();
+
+        assert_eq!(stack.peek(), None);
+        assert_eq!(stack.pop(), None);
+
+        let data = 1;
+        stack.push(data);
+
+        assert_eq!(stack.peek(), Some(&data));
+        assert_eq!(stack.pop(), Some(data));
+
+        assert_eq!(stack.peek(), None);
+        assert_eq!(stack.pop(), None);
+    }
+}
