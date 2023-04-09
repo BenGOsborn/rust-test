@@ -1,11 +1,23 @@
 extern crate compiler;
 
 use compiler::calculator::calculate::calculate;
+use std::io;
 
 fn main() {
-    let expression = "(3 + 5) * 12 - 196";
+    println!("Welcome to the basic calculator!");
+    println!("Operators supported = {{'+', '-', '*', '/', '^', '(', ')'}}");
+    println!("Enter 'exit' to quit");
 
-    let value = calculate(expression);
+    loop {
+        print!("> ");
 
-    println!("{:?} = {:?}", expression, value);
+        let mut expression = String::new();
+        io::stdin()
+            .read_line(&mut expression)
+            .expect("Failed to read line");
+
+        let value = calculate(&expression);
+
+        println!("{:?} = {:?}", expression, value);
+    }
 }
