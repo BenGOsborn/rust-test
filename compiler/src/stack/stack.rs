@@ -1,7 +1,7 @@
 use crate::stack::node::Node;
 
 pub struct Stack<T> {
-    pub length: usize,
+    pub length: u32,
     pub head: Option<Box<Node<T>>>,
 }
 

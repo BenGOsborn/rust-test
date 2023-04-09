@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Token {
     BracketOpen,
     BracketClosed,
@@ -7,7 +7,7 @@ pub enum Token {
     OpSubtract,
     OpMultiply,
     OpDivide,
-    Value(String),
+    Value(u32),
 }
 
 impl Token {

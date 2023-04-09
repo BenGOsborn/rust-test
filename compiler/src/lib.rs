@@ -1,3 +1,3 @@
 pub mod parser;
-pub mod stack;
+mod stack;
 pub mod tokenizer;

@@ -26,10 +26,8 @@ pub fn generate_rpn(tokens: &Vec<Token>) -> Vec<&Token> {
             | Token::OpDivide
             | Token::OpAdd
             | Token::OpSubtract => {
-                // **** We first check if the stack is empty, in which we will push an element to the stack
-                // **** If there is already an element on the stack, we check if our new element is greater where we push another one on
-                // **** Otherwise, we pop the previous ones off until we find an element that is less where we push it on again
-
+                // If the stack is empty or the new operator takes precedence, we push the operator to the stack
+                // Otherwise, pop all operators that take precedence on the stack off before adding next
                 loop {
                     let value = stack.peek().map_or(StackOption::Push, |stack_token| {
                         if token.compare() > stack_token.compare() {
@@ -62,10 +60,42 @@ pub fn generate_rpn(tokens: &Vec<Token>) -> Vec<&Token> {
     rpn
 }
 
-pub fn parse(tokens: &Vec<Token>) -> i32 {
-    let rpn = generate_rpn(tokens);
+pub fn evaluate(rpn: &Vec<&Token>) -> Token {
+    let mut stack: Stack<Token> = Stack::new();
 
-    println!("{:?}", rpn);
+    for token in rpn {
+        match token {
+            Token::OpAdd
+            | Token::OpSubtract
+            | Token::OpMultiply
+            | Token::OpDivide
+            | Token::OpPower => {
+                let operand1 = stack.pop().expect("Expected operand 1");
+                let operand2 = stack.pop().expect("Expected operand 2");
 
-    -1
+                match (operand1, operand2) {
+                    (Token::Value(v1), Token::Value(v2)) => {
+                        let val = match token {
+                            Token::OpAdd => v1 + v2,
+                            Token::OpSubtract => v1 - v2,
+                            Token::OpMultiply => v1 * v2,
+                            Token::OpDivide => v1 / v2,
+                            Token::OpPower => v1 ^ v2,
+                            _ => panic!("Fatal error"),
+                        };
+
+                        stack.push(Token::Value(val));
+                    }
+                    _ => panic!(
+                        "Invalid tokens for operation '{:?}': '{:?}' and '{:?}'",
+                        token, operand1, operand2
+                    ),
+                }
+            }
+            Token::Value(_) => stack.push(**token),
+            _ => panic!("Invalid token '{:?}'", token),
+        }
+    }
+
+    stack.pop().unwrap()
 }

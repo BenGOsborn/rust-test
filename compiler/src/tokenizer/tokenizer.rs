@@ -20,12 +20,12 @@ pub fn tokenize(expression: &str) -> Vec<Token> {
             '0'..='9' => {
                 // Append the character to the list of tokens or concatenate it with a previous character to form a number
                 let created = tokens.last().map_or(
-                    Status::Created(Token::Value(char.to_string())),
+                    Status::Created(Token::Value(char.to_digit(10).unwrap())),
                     |token| match token {
-                        Token::Value(prev) => {
-                            Status::Exists(Token::Value(prev.to_string() + &char.to_string()))
-                        }
-                        _ => Status::Created(Token::Value(char.to_string())),
+                        Token::Value(prev) => Status::Exists(Token::Value(
+                            (prev.to_string() + &char.to_string()).parse().unwrap(),
+                        )),
+                        _ => Status::Created(Token::Value(char.to_digit(10).unwrap())),
                     },
                 );
 
