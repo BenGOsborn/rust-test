@@ -21,7 +21,7 @@ pub fn evaluate(rpn: &Vec<&Token>) -> Token {
                             Token::OpSubtract => v2 - v1,
                             Token::OpMultiply => v2 * v1,
                             Token::OpDivide => v2 / v1,
-                            Token::OpPower => v2 ^ v1,
+                            Token::OpPower => v2.pow(v1.try_into().unwrap()),
                             _ => panic!("Fatal error"),
                         };
 
