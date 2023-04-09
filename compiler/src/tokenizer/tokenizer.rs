@@ -45,3 +45,31 @@ pub fn tokenize(expression: &str) -> Vec<Token> {
 
     tokens
 }
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn tokenizer_tokenize() {
+        let expression = "(5 + 3) * 12 ^ 2 - 4 / 2";
+        let expected = vec![
+            Token::BracketOpen,
+            Token::Value(5),
+            Token::OpAdd,
+            Token::Value(3),
+            Token::BracketClosed,
+            Token::OpMultiply,
+            Token::Value(12),
+            Token::OpPower,
+            Token::Value(2),
+            Token::OpSubtract,
+            Token::Value(4),
+            Token::OpDivide,
+            Token::Value(2),
+        ];
+
+        let tokens = tokenize(expression);
+
+        assert_eq!(tokens, expected);
+    }
+}
